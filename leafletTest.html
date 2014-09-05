@@ -2,7 +2,7 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title></title>
+    <title>Basic Leaflet example</title>
 
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
     <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
@@ -13,25 +13,47 @@
 here is a map
     <div id="map">
         <script lang="text/javascript">
-            var map = L.map('map').setView([51.505, -0.09], 13);
+            var map = L.map('map').setView([51.23, -0.55893], 12);
 
             L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             }).addTo(map);
 
-            var marker = L.marker([51.5, -0.09]).addTo(map);
+            var marker = L.marker([51.23, -0.6]).addTo(map);
 
-            var circle = L.circle([51.508, -0.11], 500, {
+            var circle = L.circle([51.2, -0.5], 500, {
                 color: 'red',
                 fillColor: '#f03',
                 fillOpacity: 0.5
             }).addTo(map);
 
             var polygon = L.polygon([
-                [51.509, -0.08],
-                [51.503, -0.06],
-                [51.51, -0.047]
+                [51.18, -0.6],
+                [51.20, -0.58],
+                [51.18, -0.557]
             ]).addTo(map);
+
+            marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
+            circle.bindPopup("I am a circle.");
+            polygon.bindPopup("I am a polygon.");
+
+            var popup2 = L.popup()
+                    .setLatLng([51.23, -0.55])
+                    .setContent("I am a standalone popup.")
+                    .openOn(map);
+
+            function onMapClick(e){
+//                alert("You clicked the map at " + e.latlng);
+                var popup = L.popup();
+                popup
+                        .setLatLng(e.latlng)
+                        .setContent("You clicked at "+ e.latlng.toString())
+                        .openOn(map);
+//                var LL = e.latlng;
+//                console.log(LL.lat); //LatLng(#,#)
+            }
+
+            map.on('click', onMapClick);
 
         </script>
 
